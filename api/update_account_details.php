@@ -19,30 +19,50 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['name'])) {
+if (empty($_POST['account_number'])) {
     $response['success'] = false;
-    $response['message'] = "Name is Empty";
+    $response['message'] = "Account number is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['confirm_account_number'])) {
+    $response['success'] = false;
+    $response['message'] = "Confirm Account number is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['ifsc_code'])) {
+    $response['success'] = false;
+    $response['message'] = "IFSC code is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['holder_name'])) {
+    $response['success'] = false;
+    $response['message'] = "Holder Name is Empty";
     print_r(json_encode($response));
     return false;
 }
 
 $user_id = $db->escapeString($_POST['user_id']);
-$name = $db->escapeString($_POST['name']);
-
+$account_number = $db->escapeString($_POST['account_number']);
+$confirm_account_number = $db->escapeString($_POST['confirm_account_number']);
+$ifsc_code = $db->escapeString($_POST['ifsc_code']);
+$holder_name = $db->escapeString($_POST['holder_name']);
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
-    $sql = "UPDATE `users` SET `name`='$name' WHERE id=" . $user_id;
+    $sql = "UPDATE `users` SET `account_number`='$account_number',`ifsc_code`='$ifsc_code',`holder_name`='$holder_name' WHERE id=" . $user_id;
     $db->sql($sql);
 
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;
-    $response['message'] = "User Updated Successfully";
+    $response['message'] = "Account details Updated Successfully";
     $response['data'] = $res;
 
 }
@@ -56,4 +76,3 @@ print_r(json_encode($response));
 
 
 
-?>

@@ -17,14 +17,14 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['points'])) {
+if (empty($_POST['amount'])) {
     $response['success'] = false;
-    $response['message'] = "points is Empty";
+    $response['message'] = "Amount is Empty";
     print_r(json_encode($response));
     return false;
 }
 $user_id = $db->escapeString($_POST['user_id']);
-$points= $db->escapeString($_POST['points']);
+$amount= $db->escapeString($_POST['amount']);
 
 $sql = "SELECT * FROM users WHERE id = '$user_id'";
 $db->sql($sql);
@@ -32,18 +32,26 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
-    $current_points=$res[0]['points'];
-    $new_points=$points+$current_points;
-    $sql= "INSERT INTO points (user_id,points) VALUES ('$user_id','$points')";
-    $db->sql($sql);
-    $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
-    $db->sql($sql);
-    $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $response['success'] = true;
-    $response['message'] = "points added Successfully";
-    $response['data'] = $res;
+    $earn=$res[0]['earn'];
+    if($earn>=$amount){
+        $new_earn=$earn-$amount;
+        $sql = "UPDATE `users` SET `earn`='$new_earn' WHERE id=" . $user_id;
+        $db->sql($sql);
+        $sql = "INSERT INTO withdrawal  (user_id,amount) VALUES ('$user_id','$amount')";
+        $db->sql($sql);
+        $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
+        $db->sql($sql);
+        $res = $db->getResult();
+        $response['success'] = true;
+        $response['message'] = "Amount withdrawed  Successfully";
+        $response['data'] = $res;
+    }
+    else{
+        $response['success'] = false;
+        $response['message'] = "Insufficient Fund";
+
+    }
+    
 
 }
 else{
@@ -52,4 +60,4 @@ else{
 }
 
 print_r(json_encode($response));
-?>
+
