@@ -49,27 +49,54 @@ if (empty($_POST['points'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['total_points'])) {
+    $response['success'] = false;
+    $response['message'] = "total_points is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 
 $user_id = $db->escapeString($_POST['user_id']);
 $game_name = $db->escapeString($_POST['game_name']);
 $game_type = $db->escapeString($_POST['game_type']);
 $game_method = $db->escapeString($_POST['game_method']);
-$number = $db->escapeString($_POST['number']);
-$points = $db->escapeString($_POST['points']);
+$total_points = $db->escapeString($_POST['total_points']);
+$number = $_POST['number'];
+$points = $_POST['points'];
+$points_arr = json_decode($points, true);
+$number_arr = json_decode($number, true);
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
-        $sql = "INSERT INTO `games`  (user_id,game_name,game_type,game_method,number,points) VALUES('$user_id','$game_name'
-        ,'$game_type','$game_method','$number','$points')" ;
-        $db->sql($sql);
-        $res = $db->getResult();
-        $response['success'] = true;
-        $response['message'] = "Game details Added Successfully";
-        $response['data'] = $res;
+    $current_points=$res[0]['points'];
+    if($current_points>=$total_points){
+        for ($i = 0; $i < count($points_arr); $i++) {
+            $p = $points_arr[$i] % 5;
+            if($points_arr[$i] > 0 && $p == 0){
+                $sql = "INSERT INTO `games`  (user_id,game_name,game_type,game_method,number,points) VALUES('$user_id','$game_name'
+                ,'$game_type','$game_method','$number_arr[$i]','$points_arr[$i]')" ;
+                $db->sql($sql);
+
+            }
+
+        }
+    
+    
+            $response['success'] = true;
+            $response['message'] = "Game details Added Successfully";
+
+    }
+    else{
+        $response['success'] = false;
+        $response['message'] = "Insufficient points";
+
+    }
+
+
      
 }
 else{

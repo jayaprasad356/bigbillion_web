@@ -27,12 +27,15 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1){
     $response['success'] = true;
+    $response['login'] = true;
     $response['message'] = "Logged In Successfully";
     $response['data'] = $res;
 }
 else{
-    $response['success'] = false;
-    $response['message'] = "Mobile Number Not Registered";
+    $response['success'] = true;
+    $response['login'] = false;
+    $response['message'] = "Logged In Successfully";
+    $response['data'] = $res;
 
 }
 print_r(json_encode($response));
