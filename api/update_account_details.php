@@ -6,13 +6,10 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-
 include_once('../includes/crud.php');
-
 include_once('../includes/variables.php');
 $db = new Database();
 $db->connect();
-
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User Id is Empty";
@@ -22,12 +19,6 @@ if (empty($_POST['user_id'])) {
 if (empty($_POST['account_number'])) {
     $response['success'] = false;
     $response['message'] = "Account number is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['confirm_account_number'])) {
-    $response['success'] = false;
-    $response['message'] = "Confirm Account number is Empty";
     print_r(json_encode($response));
     return false;
 }
@@ -46,7 +37,6 @@ if (empty($_POST['holder_name'])) {
 
 $user_id = $db->escapeString($_POST['user_id']);
 $account_number = $db->escapeString($_POST['account_number']);
-$confirm_account_number = $db->escapeString($_POST['confirm_account_number']);
 $ifsc_code = $db->escapeString($_POST['ifsc_code']);
 $holder_name = $db->escapeString($_POST['holder_name']);
 
