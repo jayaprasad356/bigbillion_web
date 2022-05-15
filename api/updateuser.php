@@ -13,9 +13,9 @@ include_once('../includes/variables.php');
 $db = new Database();
 $db->connect();
 
-if (empty($_POST['user_id'])) {
+if (empty($_POST['mobile'])) {
     $response['success'] = false;
-    $response['message'] = "User Id is Empty";
+    $response['message'] = "Mobilenumber is Empty";
     print_r(json_encode($response));
     return false;
 }
@@ -26,30 +26,19 @@ if (empty($_POST['name'])) {
     return false;
 }
 
-$user_id = $db->escapeString($_POST['user_id']);
+$mobile = $db->escapeString($_POST['mobile']);
 $name = $db->escapeString($_POST['name']);
 
-
-$sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
+$sql= "INSERT INTO users (mobile,name,earn,points) VALUES ('$mobile','$name',0,0)";
+$db->sql($sql);
+$res = $db->getResult();
+$sql = "SELECT * FROM users WHERE mobile ='$mobile'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
-if ($num == 1) {
-    $sql = "UPDATE `users` SET `name`='$name' WHERE id=" . $user_id;
-    $db->sql($sql);
-
-    $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $response['success'] = true;
-    $response['message'] = "User Updated Successfully";
-    $response['data'] = $res;
-
-}
-else{
-    $response['success'] = false;
-    $response['message'] = "User Not Found";
-}
+$response['success'] = true;
+$response['message'] = "Logged In Successfully";
+$response['data'] = $res;
 
 print_r(json_encode($response));
 
