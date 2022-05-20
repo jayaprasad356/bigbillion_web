@@ -55,6 +55,12 @@ if (empty($_POST['total_points'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['game_date'])) {
+    $response['success'] = false;
+    $response['message'] = "Game Date is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 
 $user_id = $db->escapeString($_POST['user_id']);
@@ -62,6 +68,7 @@ $game_name = $db->escapeString($_POST['game_name']);
 $game_type = $db->escapeString($_POST['game_type']);
 $game_method = $db->escapeString($_POST['game_method']);
 $total_points = $db->escapeString($_POST['total_points']);
+$game_date = $db->escapeString($_POST['game_date']);
 $number = $_POST['number'];
 $points = $_POST['points'];
 $points_arr = json_decode($points, true);
@@ -83,9 +90,23 @@ if ($num == 1) {
         for ($i = 0; $i < count($points_arr); $i++) {
             $p = $points_arr[$i] % 5;
             if($points_arr[$i] > 0 && $p == 0){
-                $sql = "INSERT INTO `games`  (user_id,game_name,game_type,game_method,number,points) VALUES('$user_id','$game_name'
-                ,'$game_type','$game_method','$number_arr[$i]','$points_arr[$i]')" ;
+                $sql = "SELECT * FROM `games` WHERE `user_id` = '$user_id' AND `game_name`='$game_name' AND `game_type`='$game_type' AND `game_method`='$game_method' AND `game_date`='$game_date' AND `number`='$number_arr[$i]'";
                 $db->sql($sql);
+                $resp = $db->getResult();
+                $num = $db->numRows($resp);
+                if ($num == 1) {
+                    $points_arr[$i] = $points_arr[$i] + $resp[0]['points'];
+                    $game_id = $resp[0]['id'];
+                    $sql = "UPDATE `games` SET `points`='$points_arr[$i]' WHERE id = '$game_id'";
+                    $db->sql($sql);
+                } else {
+                    $sql = "INSERT INTO `games` (user_id,game_name,game_type,game_method,number,points,game_date,date_created) VALUES('$user_id','$game_name','$game_type','$game_method','$number_arr[$i]','$points_arr[$i]','$game_date',NOW())";
+                    $db->sql($sql);
+
+                }
+            
+
+
 
             }
         }
