@@ -90,7 +90,7 @@ if ($num == 1) {
         for ($i = 0; $i < count($points_arr); $i++) {
             $p = $points_arr[$i] % 5;
             if($points_arr[$i] > 0 && $p == 0){
-                $sql = "SELECT * FROM `games` WHERE `user_id` = '$user_id' AND `game_name`='$game_name' AND `game_type`='$game_type' AND `game_method`='$game_method' AND `game_date`='$game_date' AND `number`='$number_arr[$i]'";
+                $sql = "SELECT * FROM `games` WHERE `game_date`='$game_date' AND `number`='$number_arr[$i]'";
                 $db->sql($sql);
                 $resp = $db->getResult();
                 $num = $db->numRows($resp);
