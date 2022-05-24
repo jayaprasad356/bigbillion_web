@@ -34,25 +34,12 @@ if (empty($_POST['holder_name'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['gpay'])) {
-    $response['success'] = false;
-    $response['message'] = "Gpay is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['phonepe'])) {
-    $response['success'] = false;
-    $response['message'] = "Phonepe is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-
 $user_id = $db->escapeString($_POST['user_id']);
 $account_number = $db->escapeString($_POST['account_number']);
 $ifsc_code = $db->escapeString($_POST['ifsc_code']);
 $holder_name = $db->escapeString($_POST['holder_name']);
-$gpay = $db->escapeString($_POST['gpay']);
-$phonepe = $db->escapeString($_POST['phonepe']);
+$gpay = (isset($_POST['gpay']) && !empty(trim($_POST['gpay']))) ? $db->escapeString(trim($_POST['gpay'])) : '';
+$phonepe = (isset($_POST['phonepe']) && !empty(trim($_POST['phonepe']))) ? $db->escapeString(trim($_POST['phonepe'])) : '';
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
 $db->sql($sql);
@@ -61,7 +48,6 @@ $num = $db->numRows($res);
 if ($num == 1) {
     $sql = "UPDATE `users` SET `account_number`='$account_number',`ifsc_code`='$ifsc_code',`holder_name`='$holder_name',`gpay`='$gpay',`phonepe`='$phonepe' WHERE id=" . $user_id;
     $db->sql($sql);
-
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
     $res = $db->getResult();
