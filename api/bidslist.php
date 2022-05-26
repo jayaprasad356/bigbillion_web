@@ -32,11 +32,10 @@ if (empty($_POST['game_name'])) {
 $date = $db->escapeString($_POST['date']);
 $game_name = $db->escapeString($_POST['game_name']);
 $user_id = $db->escapeString($_POST['user_id']);
-$sql = "SELECT * FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND DATE(date_created) = DATE('$date')";
+$sql = "SELECT * FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
-    
 if ($num >= 1) {
     $response['success'] = true;
     $response['message'] = "Bids listed Successfully";
