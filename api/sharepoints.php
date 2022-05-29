@@ -45,8 +45,11 @@ if ($num == 1) {
         $num = $db->numRows($resshare);
         if ($num == 1) {
             $share_user_points=$resshare[0]['points'];
+            $shared_user_id=$resshare[0]['id'];
             $update_user_points=$user_points-$points;
             $update_share_user_points=$share_user_points+$points;
+            $sql = "INSERT INTO `share`(`user_id`, `shared_user_id`, `points`) VALUES ('$user_id','$shared_user_id','$points')";
+            $db->sql($sql);
             $sql = "UPDATE `users` SET `points`='$update_user_points' WHERE id=" . $user_id;
             $db->sql($sql);
             $sql = "UPDATE `users` SET `points`='$update_share_user_points' WHERE mobile=" . $mobile;

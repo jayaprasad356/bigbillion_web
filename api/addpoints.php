@@ -32,15 +32,13 @@ if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $current_points=$res[0]['points'];
     $new_points=$points+$current_points;
-    $sql= "INSERT INTO points (user_id,points) VALUES ('$user_id','$points')";
-    $db->sql($sql);
-    $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
+    $sql= "INSERT INTO points (user_id,points,status) VALUES ('$user_id','$points',0)";
     $db->sql($sql);
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
     $res = $db->getResult();
     $response['success'] = true;
-    $response['message'] = "Points Added Successfully";
+    $response['message'] = "Points Requested Successfully";
     $response['data'] = $res;
 
 }

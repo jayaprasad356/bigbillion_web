@@ -35,8 +35,8 @@ if ($num == 1) {
     $earn=$res[0]['earn'];
     if($earn>=$amount){
         $new_earn=$earn-$amount;
-        $sql = "UPDATE `users` SET `earn`='$new_earn' WHERE id=" . $user_id;
-        $db->sql($sql);
+        // $sql = "UPDATE `users` SET `earn`='$new_earn' WHERE id=" . $user_id;
+        // $db->sql($sql);
         $sql = "INSERT INTO withdrawal  (user_id,points,status) VALUES ('$user_id','$amount',0)";
         $db->sql($sql);
         $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
