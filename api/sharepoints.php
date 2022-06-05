@@ -6,6 +6,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+date_default_timezone_set('Asia/Kolkata');
 include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
@@ -57,6 +58,9 @@ if ($num == 1) {
             $sql = "SELECT * FROM users WHERE id = '$user_id'";
             $db->sql($sql);
             $res = $db->getResult();
+            $date = Date('Y-m-d H:i:s');
+            $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$points','$update_user_points','sharepoints','$date')" ;
+            $db->sql($sql);
             $response['success'] = true;
             $response['message'] = "Shared Points Successfully";
             $response['data'] = $res;

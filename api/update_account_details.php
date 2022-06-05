@@ -16,29 +16,11 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['account_number'])) {
-    $response['success'] = false;
-    $response['message'] = "Account number is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['ifsc_code'])) {
-    $response['success'] = false;
-    $response['message'] = "IFSC code is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['holder_name'])) {
-    $response['success'] = false;
-    $response['message'] = "Holder Name is Empty";
-    print_r(json_encode($response));
-    return false;
-}
 $user_id = $db->escapeString($_POST['user_id']);
-$account_number = $db->escapeString($_POST['account_number']);
-$ifsc_code = $db->escapeString($_POST['ifsc_code']);
-$holder_name = $db->escapeString($_POST['holder_name']);
-$gpay = (isset($_POST['gpay']) && !empty(trim($_POST['gpay']))) ? $db->escapeString(trim($_POST['gpay'])) : '';
+$account_number = (isset($_POST['account_number']) && !empty(trim($_POST['account_number']))) ? $db->escapeString(trim($_POST['account_number'])) : '';
+$ifsc_code = (isset($_POST['ifsc_code']) && !empty(trim($_POST['ifsc_code']))) ? $db->escapeString(trim($_POST['ifsc_code'])) : '';
+$holder_name = (isset($_POST['holder_name']) && !empty(trim($_POST['holder_name']))) ? $db->escapeString(trim($_POST['holder_name'])) : '';
+$paytm = (isset($_POST['paytm']) && !empty(trim($_POST['paytm']))) ? $db->escapeString(trim($_POST['paytm'])) : '';
 $phonepe = (isset($_POST['phonepe']) && !empty(trim($_POST['phonepe']))) ? $db->escapeString(trim($_POST['phonepe'])) : '';
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
@@ -46,7 +28,7 @@ $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
-    $sql = "UPDATE `users` SET `account_number`='$account_number',`ifsc_code`='$ifsc_code',`holder_name`='$holder_name',`gpay`='$gpay',`phonepe`='$phonepe' WHERE id=" . $user_id;
+    $sql = "UPDATE `users` SET `account_number`='$account_number',`ifsc_code`='$ifsc_code',`holder_name`='$holder_name',`paytm`='$paytm',`phonepe`='$phonepe' WHERE id=" . $user_id;
     $db->sql($sql);
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);

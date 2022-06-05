@@ -37,6 +37,8 @@ if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
     $res = $db->getResult();
+
+
     $response['success'] = true;
     $response['message'] = "Points Requested Successfully";
     $response['data'] = $res;

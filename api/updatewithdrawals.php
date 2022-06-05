@@ -6,6 +6,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+date_default_timezone_set('Asia/Kolkata');
 
 include_once('../includes/crud.php');
 
@@ -38,6 +39,9 @@ if($status == 1){
     $earn=$res[0]['earn'];
     $new_earn=$earn-$amount;
     $sql = "UPDATE `users` SET `earn`='$new_earn' WHERE id=" . $user_id;
+    $db->sql($sql);
+    $date = Date('Y-m-d H:i:s');
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$amount','$new_earn','withdrawal','$date')" ;
     $db->sql($sql);
 }
 $sql = "UPDATE `withdrawal` SET `status`='$status' WHERE id = " . $withdrawal_id;
