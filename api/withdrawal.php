@@ -41,7 +41,7 @@ if ($num == 1) {
         $db->sql($sql);
         $res = $db->getResult();
         $response['success'] = true;
-        $response['message'] = "Amount withdrawed  Successfully";
+        $response['message'] = "Amount withdrawed Requested  Successfully";
         $response['data'] = $res;
     }
     else{
