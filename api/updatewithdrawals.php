@@ -31,22 +31,29 @@ $sql = "SELECT * FROM withdrawal WHERE id = '" . $withdrawal_id . "'";
 $db->sql($sql);
 $res = $db->getResult();
 if($status == 1){
-    $user_id = $res[0]['id'];
+    $user_id = $res[0]['user_id'];
     $amount = $res[0]['points'];
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
-    $res = $db->getResult();
-    $earn=$res[0]['earn'];
+    $res1 = $db->getResult();
+    $earn=$res1[0]['earn'];
     $new_earn=$earn-$amount;
     $sql = "UPDATE `users` SET `earn`='$new_earn' WHERE id=" . $user_id;
     $db->sql($sql);
     $date = Date('Y-m-d H:i:s');
     $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$amount','$new_earn','withdrawal','$date')" ;
     $db->sql($sql);
+    $sql = "UPDATE `withdrawal` SET `status`='$status' WHERE id = " . $withdrawal_id;
+    $db->sql($sql);
+    $res = $db->getResult();
 }
-$sql = "UPDATE `withdrawal` SET `status`='$status' WHERE id = " . $withdrawal_id;
-$db->sql($sql);
-$res = $db->getResult();
+else{
+    $sql = "UPDATE `withdrawal` SET `status`='$status' WHERE id = " . $withdrawal_id;
+    $db->sql($sql);
+    $res = $db->getResult();
+
+}
+
 $response['success'] = true;
 $response['message'] = "Updated Successfully";
 print_r(json_encode($response));

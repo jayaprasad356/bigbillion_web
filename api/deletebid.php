@@ -6,7 +6,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-
+date_default_timezone_set('Asia/Kolkata');
 
 include_once('../includes/crud.php');
 
@@ -55,6 +55,9 @@ if ($num >= 1) {
     $db->sql($sql);
     $res = $db->getResult();
     $sql = "DELETE FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
+    $db->sql($sql);
+    $date = Date('Y-m-d H:i:s');
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$totalpoints','$newpoints','delete_bids','$date')" ;
     $db->sql($sql);
     $response['success'] = true;
     $response['message'] = "Bids Deleted Successfully";

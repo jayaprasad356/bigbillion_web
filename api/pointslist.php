@@ -11,7 +11,7 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
-$sql = "SELECT *,points.id AS id,points.points AS points,points.status AS status FROM points,users WHERE points.user_id = users.id ORDER BY points.status";
+$sql = "SELECT *,points.id AS id,points.points AS points,points.status AS status FROM points,users WHERE points.user_id = users.id ORDER BY points.id DESC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
