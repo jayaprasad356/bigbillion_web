@@ -58,8 +58,11 @@ if ($num == 1) {
             $sql = "SELECT * FROM users WHERE id = '$user_id'";
             $db->sql($sql);
             $res = $db->getResult();
+            $mymobile=$res[0]['mobile'];
             $date = Date('Y-m-d H:i:s');
-            $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$points','$update_user_points','sharepoints','$date')" ;
+            $sql = "INSERT INTO `transactions` (user_id,points,balance,type,share_to,date_created) VALUES('$user_id','$points','$update_user_points','sharepoints','$mobile','$date')" ;
+            $db->sql($sql);
+            $sql = "INSERT INTO `transactions` (user_id,points,balance,type,share_from,date_created) VALUES('$shared_user_id','$points','$update_share_user_points','sharepoints','$mymobile','$date')" ;
             $db->sql($sql);
             $response['success'] = true;
             $response['message'] = "Shared Points Successfully";
