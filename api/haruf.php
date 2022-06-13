@@ -95,7 +95,7 @@ if ($num == 1) {
         $res = $db->getResult();
     
         $response['success'] = true;
-        $response['message'] = "Game Points Added Successfully";
+        $response['message'] = "Bet Placed Successfully";
         $response['data'] = $res;
 
     }

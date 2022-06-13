@@ -32,9 +32,9 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
-    $earn=$res[0]['earn'];
-    if($earn>=$amount){
-        $new_earn=$earn-$amount;
+    $points=$res[0]['points'];
+    if($points>=$amount){
+        $new_earn=$points-$amount;
         $sql = "INSERT INTO withdrawal  (user_id,points,status) VALUES ('$user_id','$amount',0)";
         $db->sql($sql);
         $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";

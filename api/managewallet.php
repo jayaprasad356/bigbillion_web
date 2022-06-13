@@ -21,8 +21,22 @@ if (empty($_POST['points'])) {
     print_r(json_encode($response));
     return false;            
 }
+if (empty($_POST['type'])) {
+    $response['success'] = false;
+    $response['message'] = "type is Empty";
+    print_r(json_encode($response));
+    return false;            
+}
+if (empty($_POST['reason'])) {
+    $response['success'] = false;
+    $response['message'] = "reason is Empty";
+    print_r(json_encode($response));
+    return false;            
+}
 $user_id = $db->escapeString($_POST['user_id']);
 $points= $db->escapeString($_POST['points']);
+$type= $db->escapeString($_POST['type']);
+$reason= $db->escapeString($_POST['reason']);
 
 $sql = "SELECT * FROM users WHERE id = '$user_id'";
 $db->sql($sql);
@@ -31,24 +45,23 @@ $num = $db->numRows($res);
 if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $current_points=$res[0]['points'];
-    $new_points=$points+$current_points;
+    if($type=='debit'){
+        $new_points=$current_points-$points;
+    }
+    else{
+        $new_points=$current_points+$points;
+    }
     $date = Date('Y-m-d H:i:s');
-    $sql= "INSERT INTO points (user_id,points,status,date_created) VALUES ('$user_id','$points',0,'$date')";
+    $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
     $db->sql($sql);
-    $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created,reason) VALUES('$user_id','$points','$new_points','$type','$date','$reason')" ;
     $db->sql($sql);
-    $res = $db->getResult();
-
-
     $response['success'] = true;
-    $response['message'] = "Points Requested Successfully";
-    $response['data'] = $res;
-
+    $response['message'] = "Transaction Successfully Completed";
 }
 else{
     $response['success'] = false;
     $response['message'] = "User Not Found";
 }
-
 print_r(json_encode($response));
 ?>
