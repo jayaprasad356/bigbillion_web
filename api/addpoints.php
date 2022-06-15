@@ -6,6 +6,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+date_default_timezone_set('Asia/Kolkata');
 include_once('../includes/crud.php');
 $db = new Database();
 $db->connect();
@@ -33,7 +34,11 @@ if ($num == 1) {
     $current_points=$res[0]['points'];
     $new_points=$points+$current_points;
     $date = Date('Y-m-d H:i:s');
-    $sql= "INSERT INTO points (user_id,points,status,date_created) VALUES ('$user_id','$points',0,'$date')";
+    $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
+    $db->sql($sql);
+    $sql= "INSERT INTO points (user_id,points,status,date_created) VALUES ('$user_id','$points',1,'$date')";
+    $db->sql($sql);
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$points','$new_points','deposit','$date')" ;
     $db->sql($sql);
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
@@ -41,7 +46,7 @@ if ($num == 1) {
 
 
     $response['success'] = true;
-    $response['message'] = "Points Requested Successfully";
+    $response['message'] = "Points Added Successfully";
     $response['data'] = $res;
 
 }

@@ -11,26 +11,19 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
-if (empty($_POST['date'])) {
-    $response['success'] = false;
-    $response['message'] = "Date is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-$date = $db->escapeString($_POST['date']);
-$sql = "SELECT *,points.id AS id,points.points AS points,points.status AS status FROM points,users WHERE points.user_id = users.id AND points.date_created like '%" . $date . "%' ORDER BY points.id DESC";
+$sql = "SELECT * FROM settings";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
     $response['success'] = true;
-    $response['message'] = "Points listed Successfully";
+    $response['message'] = "Settings listed Successfully";
     $response['data'] = $res;
     print_r(json_encode($response));
 }
 else{
     $response['success'] = false;
-    $response['message'] = "No Points Found";
+    $response['message'] = "No Bids Found";
     $response['data'] = $res;
     print_r(json_encode($response));
 

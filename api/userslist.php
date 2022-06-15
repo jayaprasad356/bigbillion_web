@@ -11,7 +11,20 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
-$sql = "SELECT * FROM users";
+
+if (empty($_POST['search'])) {
+    
+    $sql = "SELECT * FROM users";
+    
+}
+else{
+    $search = $db->escapeString($_POST['search']);
+    $sql = "SELECT * FROM users WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
+
+
+}
+
+
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);

@@ -18,7 +18,7 @@ if (empty($_POST['search'])) {
     return false;
 }
 $search = $db->escapeString($_POST['search']);
-$sql = "SELECT * FROM users WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%' ";;
+$sql = "SELECT * FROM users WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
