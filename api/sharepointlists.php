@@ -26,6 +26,8 @@ if ($num >= 1) {
         $temp['id'] = $row['id'];
         $temp['mobile'] = $row['mobile'];
         $temp['points'] = $row['points'];
+        $temp['date'] = $row['date'];
+        $temp['date_created'] = $row['date_created'];
         $temp['shared_mobile'] = $shared_mobile;
         $rows[] = $temp;
         
