@@ -37,7 +37,7 @@ if ($num == 1) {
     $date = date('Y-m-d');
     $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
     $db->sql($sql);
-    $sql= "INSERT INTO points (user_id,points,status,date_created) VALUES ('$user_id','$points',1,'$date')";
+    $sql= "INSERT INTO points (user_id,points,status,date_created) VALUES ('$user_id','$points',1,'$datetime')";
     $db->sql($sql);
     $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$points','$new_points','deposit','$date','$datetime')" ;
     $db->sql($sql);

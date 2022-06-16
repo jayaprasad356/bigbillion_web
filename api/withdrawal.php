@@ -34,8 +34,10 @@ if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $points=$res[0]['points'];
     if($points>=$amount){
+        $datetime = Date('Y-m-d H:i:s');
+        $date = date('Y-m-d');
         $new_earn=$points-$amount;
-        $sql = "INSERT INTO withdrawal  (user_id,points,status) VALUES ('$user_id','$amount',0)";
+        $sql = "INSERT INTO withdrawal  (user_id,points,status,date,date_created) VALUES ('$user_id','$amount',0,'$date','$datetime')";
         $db->sql($sql);
         $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
         $db->sql($sql);

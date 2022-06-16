@@ -11,7 +11,15 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
-$sql = "SELECT *,withdrawal.id AS id,withdrawal.points AS points,withdrawal.status AS status,withdrawal.id AS id FROM withdrawal,users WHERE withdrawal.user_id = users.id ORDER BY withdrawal.status";
+
+if (empty($_POST['date'])) {
+    $response['success'] = false;
+    $response['message'] = "Date is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+$date = $db->escapeString($_POST['date']);
+$sql = "SELECT *,withdrawal.id AS id,withdrawal.points AS points,withdrawal.status AS status,withdrawal.id AS id FROM withdrawal,users WHERE withdrawal.user_id = users.id AND withdrawal.date_created like '%" . $date . "%' ORDER BY withdrawal.id DESC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
