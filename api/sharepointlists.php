@@ -11,7 +11,14 @@ include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
-$sql = "SELECT *,s.points AS points FROM share s,users u WHERE s.user_id = u.id";
+if (empty($_POST['date'])) {
+    $response['success'] = false;
+    $response['message'] = "Date is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+$date = $db->escapeString($_POST['date']);
+$sql = "SELECT *,s.points AS points,s.date_created AS date_created FROM share s,users u WHERE s.user_id = u.id AND s.date_created like '%" . $date . "%' ORDER BY s.id DESC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
