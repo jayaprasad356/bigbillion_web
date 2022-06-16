@@ -77,9 +77,10 @@ if ($num == 1) {
         $new_points=$current_points-$total_points;
         $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
         $db->sql($sql);
-        $date = Date('Y-m-d H:i:s');
-        $sql = "INSERT INTO `transactions` (user_id,game_name,game_type,game_method,points,balance,type,date_created) VALUES('$user_id','$game_name'
-        ,'$game_type','$game_method','$total_points','$new_points','game','$date')" ;
+        $datetime = Date('Y-m-d H:i:s');
+        $date = date('Y-m-d');
+        $sql = "INSERT INTO `transactions` (user_id,game_name,game_type,game_method,points,balance,type,date,date_created) VALUES('$user_id','$game_name'
+        ,'$game_type','$game_method','$total_points','$new_points','game','$date','$datetime')" ;
         $db->sql($sql);
         for ($i = 0; $i < count($points_arr); $i++) {
             $p = $points_arr[$i] % 5;

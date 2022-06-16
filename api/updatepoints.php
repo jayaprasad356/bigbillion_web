@@ -45,10 +45,12 @@ if($status == 1){
     $res = $db->getResult();
     $current_points=$res[0]['points'];
     $new_points=$points+$current_points;
+    $datetime = Date('Y-m-d H:i:s');
+    $date = date('Y-m-d');
     $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
     $db->sql($sql);
     $date = Date('Y-m-d H:i:s');
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$current_points','$new_points','deposit','$date')" ;
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$current_points','$new_points','deposit','$date','$datetime')" ;
     $db->sql($sql);
 }
 $sql = "UPDATE `points` SET `status`='$status' WHERE id = " . $point_id;

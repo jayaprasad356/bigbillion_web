@@ -33,12 +33,13 @@ if ($num == 1) {
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $current_points=$res[0]['points'];
     $new_points=$points+$current_points;
-    $date = Date('Y-m-d H:i:s');
+    $datetime = Date('Y-m-d H:i:s');
+    $date = date('Y-m-d');
     $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
     $db->sql($sql);
     $sql= "INSERT INTO points (user_id,points,status,date_created) VALUES ('$user_id','$points',1,'$date')";
     $db->sql($sql);
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date_created) VALUES('$user_id','$points','$new_points','deposit','$date')" ;
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$points','$new_points','deposit','$date','$datetime')" ;
     $db->sql($sql);
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);

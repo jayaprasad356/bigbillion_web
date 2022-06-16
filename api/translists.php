@@ -17,14 +17,17 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
+$todaydate = date('Y-m-d');
+$startdate = strtotime("-7 day", strtotime($todaydate));
+$startdate = date('Y-m-d', $startdate);
 $user_id = $db->escapeString($_POST['user_id']);
-$sql = "SELECT * FROM transactions WHERE user_id = '$user_id' ORDER BY id DESC";
+$sql = "SELECT * FROM transactions WHERE user_id = '$user_id' AND date BETWEEN '$startdate' AND '$todaydate' ORDER BY id DESC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
     
-    $response['success'] = true;
-    $response['message'] = "Transactions listed Successfully";
-    $response['data'] = $res;
-    print_r(json_encode($response));
+$response['success'] = true;
+$response['message'] = "Transactions listed Successfully".$todaydate;
+$response['data'] = $res;
+print_r(json_encode($response));
 ?>
