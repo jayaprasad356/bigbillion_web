@@ -42,8 +42,11 @@ if ($num >= 1) {
 
     $sql = "SELECT SUM(points) AS total_points FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
     $db->sql($sql);
-    $res = $db->getResult();
-    $totalpoints = $res[0]['total_points'];
+    $resg = $db->getResult();
+    $sql = "SELECT SUM(points) AS total_points FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
+    $db->sql($sql);
+    $resh = $db->getResult();
+    $totalpoints = $resg[0]['total_points'] + $resh[0]['total_points'];
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
     $db->sql($sql);
     $res = $db->getResult();
@@ -55,6 +58,8 @@ if ($num >= 1) {
     $db->sql($sql);
     $res = $db->getResult();
     $sql = "DELETE FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
+    $db->sql($sql);
+    $sql = "DELETE FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
     $db->sql($sql);
     $datetime = Date('Y-m-d H:i:s');
     $date = date('Y-m-d');
