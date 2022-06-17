@@ -6,7 +6,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-
+date_default_timezone_set('Asia/Kolkata');
 include_once('../includes/crud.php');
 
 $db = new Database();
@@ -32,7 +32,7 @@ if (empty($_POST['game_name'])) {
 $date = $db->escapeString($_POST['date']);
 $game_name = $db->escapeString($_POST['game_name']);
 $user_id = $db->escapeString($_POST['user_id']);
-$sql = "SELECT * FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND DATE(date_created) = DATE('$date')";
+$sql = "SELECT * FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
