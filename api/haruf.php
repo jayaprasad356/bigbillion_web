@@ -85,7 +85,7 @@ if ($num == 1) {
         for ($i = 0; $i < count($points_arr); $i++) {
             $p = $points_arr[$i] % 5;
             if($points_arr[$i] > 0 && $p == 0){
-                $sql = "SELECT * FROM `haruf` WHERE `game_name`='$game_name' AND `game_type`='$game_type' AND `game_date`='$game_date' AND `number`='$number_arr[$i]' AND `user_id`='$user_id'";
+                $sql = "SELECT * FROM `haruf` WHERE `game_name`='$game_name' AND `game_type`='$game_type' AND `game_date`='$date' AND `number`='$number_arr[$i]' AND `user_id`='$user_id'";
                 $db->sql($sql);
                 $resp = $db->getResult();
                 $num = $db->numRows($resp);
