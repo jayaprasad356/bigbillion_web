@@ -38,46 +38,36 @@ $sql = "SELECT * FROM games WHERE user_id = '$user_id' AND game_name = '$game_na
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
-if ($num >= 1) {
-
-    $sql = "SELECT SUM(points) AS total_points FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
-    $db->sql($sql);
-    $resg = $db->getResult();
-    $sql = "SELECT SUM(points) AS total_points FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
-    $db->sql($sql);
-    $resh = $db->getResult();
-    $totalpoints = $resg[0]['total_points'] + $resh[0]['total_points'];
-    $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $points = $res[0]['points'];
-    $newpoints = $points + $totalpoints;
-    $sql = "UPDATE users SET points = '" . $newpoints . "' WHERE id = '" . $user_id . "'";
-    $db->sql($sql);
-    $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $sql = "DELETE FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
-    $db->sql($sql);
-    $sql = "DELETE FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
-    $db->sql($sql);
-    $datetime = Date('Y-m-d H:i:s');
-    $date = date('Y-m-d');
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$totalpoints','$newpoints','delete_bids','$date','$date','$datetime')" ;
-    $db->sql($sql);
-    $response['success'] = true;
-    $response['message'] = "Bids Deleted Successfully";
-    $response['points'] = $points;
-    $response['totalpoints'] = $totalpoints;
-    $response['data'] = $res;
-    print_r(json_encode($response));
-}
-else{
-    $response['success'] = false;
-    $response['message'] = "No Bids Found";
-    $response['data'] = $res;
-    print_r(json_encode($response));
-
-}
+$sql = "SELECT SUM(points) AS total_points FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
+$db->sql($sql);
+$resg = $db->getResult();
+$sql = "SELECT SUM(points) AS total_points FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
+$db->sql($sql);
+$resh = $db->getResult();
+$totalpoints = $resg[0]['total_points'] + $resh[0]['total_points'];
+$sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
+$db->sql($sql);
+$res = $db->getResult();
+$points = $res[0]['points'];
+$newpoints = $points + $totalpoints;
+$sql = "UPDATE users SET points = '" . $newpoints . "' WHERE id = '" . $user_id . "'";
+$db->sql($sql);
+$sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
+$db->sql($sql);
+$res = $db->getResult();
+$sql = "DELETE FROM games WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
+$db->sql($sql);
+$sql = "DELETE FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name' AND game_date = '$date'";
+$db->sql($sql);
+$datetime = Date('Y-m-d H:i:s');
+$date = date('Y-m-d');
+$sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$totalpoints','$newpoints','delete_bids','$date','$date','$datetime')" ;
+$db->sql($sql);
+$response['success'] = true;
+$response['message'] = "Bids Deleted Successfully";
+$response['points'] = $points;
+$response['totalpoints'] = $totalpoints;
+$response['data'] = $res;
+print_r(json_encode($response));
 
 ?>
