@@ -85,9 +85,24 @@ if ($num == 1) {
         for ($i = 0; $i < count($points_arr); $i++) {
             $p = $points_arr[$i] % 5;
             if($points_arr[$i] > 0 && $p == 0){
-                $sql = "INSERT INTO `haruf`  (user_id,game_name,game_type,game_date,number,points) VALUES('$user_id','$game_name'
-                ,'$game_type','$date','$number_arr[$i]','$points_arr[$i]')" ;
+                $sql = "SELECT * FROM `haruf` WHERE `game_name`='$game_name' AND `game_type`='$game_type' AND `game_date`='$game_date' AND `number`='$number_arr[$i]' AND `user_id`='$user_id'";
                 $db->sql($sql);
+                $resp = $db->getResult();
+                $num = $db->numRows($resp);
+                if ($num == 1) {
+                    $points_arr[$i] = $points_arr[$i] + $resp[0]['points'];
+                    $game_id = $resp[0]['id'];
+                    $sql = "UPDATE `haruf` SET `points`='$points_arr[$i]' WHERE id = '$game_id'";
+                    $db->sql($sql);
+
+                }
+                else{
+                    $sql = "INSERT INTO `haruf`  (user_id,game_name,game_type,game_date,number,points) VALUES('$user_id','$game_name'
+                    ,'$game_type','$date','$number_arr[$i]','$points_arr[$i]')" ;
+                    $db->sql($sql);
+
+                }
+
 
             }
         }
