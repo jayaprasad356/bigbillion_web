@@ -85,8 +85,8 @@ if ($num == 1) {
         for ($i = 0; $i < count($points_arr); $i++) {
             $p = $points_arr[$i] % 5;
             if($points_arr[$i] > 0 && $p == 0){
-                $sql = "INSERT INTO `haruf`  (user_id,game_name,game_type,number,points) VALUES('$user_id','$game_name'
-                ,'$game_type','$number_arr[$i]','$points_arr[$i]')" ;
+                $sql = "INSERT INTO `haruf`  (user_id,game_name,game_type,game_date,number,points) VALUES('$user_id','$game_name'
+                ,'$game_type','$date','$number_arr[$i]','$points_arr[$i]')" ;
                 $db->sql($sql);
 
             }
