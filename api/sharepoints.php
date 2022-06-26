@@ -63,7 +63,7 @@ if ($num == 1) {
             $mymobile=$res[0]['mobile'];
             $datetime = Date('Y-m-d H:i:s');
             $date = date('Y-m-d');
-            $sql = "INSERT INTO `transactions` (user_id,points,balance,type,share_to,date,date_created) VALUES('$user_id','$points','$update_user_points','sharepoints','$mobile','$date')" ;
+            $sql = "INSERT INTO `transactions` (user_id,points,balance,type,share_to,date,date_created) VALUES('$user_id','$points','$update_user_points','sharepoints','$mobile','$date','$datetime')" ;
             $db->sql($sql);
             $sql = "INSERT INTO `transactions` (user_id,points,balance,type,share_from,date,date_created) VALUES('$shared_user_id','$points','$update_share_user_points','sharepoints','$mymobile','$date','$datetime')" ;
             $db->sql($sql);

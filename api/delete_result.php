@@ -18,9 +18,46 @@ if (empty($_POST['id'])) {
     return false;
 }
 $id = $db->escapeString($_POST['id']);
-$sql = "DELETE FROM results WHERE id = '$id'";
+$sql = "SELECT * FROM results WHERE id = '$id'";
 $db->sql($sql);
-$response['success'] = true;
-$response['message'] = "Delete Result Successfully";
-print_r(json_encode($response));
+$res = $db->getResult();
+$num = $db->numRows($res);
+$date = $res[0]['date'];
+$game_name = $res[0]['game_name'];
+$result = $res[0]['result'];
+if ($num == 1) {
+    $sql = "SELECT * FROM games WHERE game_date = '$date' AND game_name = '$game_name' AND number = '$result'";
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row) {
+        $user_id = $row['user_id'];
+        $sql = "SELECT * FROM winners WHERE user_id = '$user_id' AND game_name = '$game_name' AND date = '$date' AND result = '$result'";
+        $db->sql($sql);
+        $reswin = $db->getResult();
+        $winpoints = $reswin[0]['points'];
+        $sql = "DELETE FROM winners WHERE user_id = '$user_id' AND game_name = '$game_name' AND date = '$date' AND result = '$result'";
+        $db->sql($sql);
+        $sql = "UPDATE users SET points = points - '$winpoints' WHERE id = '$row[user_id]'";
+        $db->sql($sql);
+        $sql = "SELECT * FROM users WHERE id = '$row[user_id]'";
+        $db->sql($sql);
+        $res = $db->getResult();
+        $update_user_points = $res[0]['points'];
+        $datetime = Date('Y-m-d H:i:s');
+        $date = date('Y-m-d');
+        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$date','$datetime')" ;
+        $db->sql($sql);
+    }
+    $sql = "DELETE FROM results WHERE id = '$id'";
+    $db->sql($sql);
+    $response['success'] = true;
+    $response['message'] = "Delete Result Successfully";
+    print_r(json_encode($response));
+}
+else{
+    $response['success'] = false;
+    $response['message'] = "No Results Found";
+    print_r(json_encode($response));
+}
+
 ?>

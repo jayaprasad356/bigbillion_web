@@ -15,9 +15,10 @@ $sql = "SELECT * FROM results ORDER BY date DESC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
-if ($num == 1) {
+if ($num >= 1) {
     $response['success'] = true;
     $response['message'] = "Results listed Successfully";
+    $response['data'] = $res;
     print_r(json_encode($response));
 }
 else{
