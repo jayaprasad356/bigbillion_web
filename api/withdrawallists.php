@@ -30,6 +30,8 @@ if ($num > 0) {
             $temp['status'] = "Pending";
         }else if($row['status'] == 1){
             $temp['status'] = "Approved";
+        }else if($row['status'] == 2){
+            $temp['status'] = "Cancelled";
         }
         $temp['date_created'] = $row['date_created'];
         $rows[] = $temp;
