@@ -38,8 +38,8 @@ if($status == 1){
     $res1 = $db->getResult();
     $currentpoints=$res1[0]['points'];
     $new_points=$currentpoints-$points;
-    $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
-    $db->sql($sql);
+    // $sql = "UPDATE `users` SET `points`='$new_points' WHERE id=" . $user_id;
+    // $db->sql($sql);
     $datetime = Date('Y-m-d H:i:s');
     $date = date('Y-m-d');
     $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$amount','$new_points','withdrawal','$date','$datetime')" ;

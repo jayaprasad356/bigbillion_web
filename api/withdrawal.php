@@ -37,6 +37,8 @@ if ($num == 1) {
         $datetime = Date('Y-m-d H:i:s');
         $date = date('Y-m-d');
         $new_earn=$points-$amount;
+        $sql = "UPDATE `users` SET `points`='$new_earn' WHERE id=" . $user_id;
+        $db->sql($sql);
         $sql = "INSERT INTO withdrawal  (user_id,points,status,date,date_created) VALUES ('$user_id','$amount',0,'$date','$datetime')";
         $db->sql($sql);
         $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";

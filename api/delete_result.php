@@ -45,7 +45,7 @@ if ($num == 1) {
         $update_user_points = $res[0]['points'];
         $datetime = Date('Y-m-d H:i:s');
         $date = date('Y-m-d');
-        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$date','$datetime')" ;
+        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$game_name','$date','$datetime')" ;
         $db->sql($sql);
     }
     $sql = "DELETE FROM results WHERE id = '$id'";
