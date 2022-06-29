@@ -44,6 +44,10 @@ if ($num == 1) {
         $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
         $db->sql($sql);
         $res = $db->getResult();
+        $datetime = Date('Y-m-d H:i:s');
+        $date = date('Y-m-d');
+        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$amount','$new_earn','withdrawal','$date','$datetime')" ;
+        $db->sql($sql);
         $response['success'] = true;
         $response['message'] = "Amount withdrawed Requested  Successfully";
         $response['data'] = $res;
