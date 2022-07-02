@@ -31,6 +31,7 @@ $num = $db->numRows($res);
 if ($num >= 1) {
     $response['success'] = true;
     $response['message'] = "Users listed Successfully";
+    $response['total_users'] = $num;
     $response['data'] = $res;
     print_r(json_encode($response));
 }
