@@ -28,10 +28,16 @@ $game_name = $db->escapeString($_POST['game_name']);
 $sql = "SELECT *,users.id AS id FROM users,games WHERE users.id = games.user_id AND games.game_date = '$date' AND games.game_name = '$game_name' GROUP BY games.user_id ORDER BY users.id DESC";
 $db->sql($sql);
 $res = $db->getResult();
+$sql = "SELECT SUM(points) AS total_points FROM games WHERE game_date = '$date' AND game_name = '$game_name'";
+$db->sql($sql);
+$totalpoints = $db->getResult();
 $num = $db->numRows($res);
+$totalpoints = $totalpoints[0]['total_points'];
 if ($num >= 1) {
     $response['success'] = true;
     $response['message'] = "Users listed Successfully";
+    $response['total_users'] = $num;
+    $response['total_points'] = $totalpoints;
     $response['data'] = $res;
     print_r(json_encode($response));
 }
