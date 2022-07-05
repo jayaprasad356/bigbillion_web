@@ -25,23 +25,19 @@ if (empty($_POST['year'])) {
 }
 $month = $db->escapeString($_POST['month']);
 $year = $db->escapeString($_POST['year']);
-$sql = "SELECT * FROM results WHERE month = '$month' AND year = '$year' GROUP BY date ORDER BY date ASC";
+$sql = "SELECT date, SUM(CASE WHEN game_name='GB' THEN result  END) as GB,  SUM(CASE WHEN game_name='GL' THEN result END) as GL, SUM(CASE WHEN game_name='DS' THEN result END) as DS,  SUM(CASE WHEN game_name='FD' THEN result END) as FD FROM `results` WHERE month='$month' AND year='$year' GROUP BY date ORDER BY date ASC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
     foreach ($res as $row) {
-        $date = $row['date'];
-        $game_name = $row['game_name'];
-        $temp['id'] = $row['id'];
-        $sql = "SELECT * FROM results WHERE date = '$date' AND game_name = '$game_name'";
-        $db->sql($sql);
-        $res = $db->getResult();
-        foreach ($res as $row) {
-            $temp['date'] = $row['date'];
-            $temp[$row['game_name']] = $row['result'];
-            $rows[] = $temp;
-        }
+        $temp['GB'] = $row['GB'];
+        $temp['GL'] = $row['GL'];
+        $temp['DS'] = $row['DS'];
+        $temp['FD'] = $row['FD'];
+        $temp['date'] = $row['date'];
+        $rows[] = $temp;
+
         
         
    
