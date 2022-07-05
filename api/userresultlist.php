@@ -25,25 +25,28 @@ if (empty($_POST['year'])) {
 }
 $month = $db->escapeString($_POST['month']);
 $year = $db->escapeString($_POST['year']);
-$sql = "SELECT * FROM results WHERE month = '$month' AND year = '$year'";
+$sql = "SELECT * FROM results WHERE month = '$month' AND year = '$year' GROUP BY date ORDER BY date ASC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
     foreach ($res as $row) {
         $date = $row['date'];
+        $game_name = $row['game_name'];
         $temp['id'] = $row['id'];
-        $sql = "SELECT * FROM results WHERE date = '$date'";
+        $sql = "SELECT * FROM results WHERE date = '$date' AND game_name = '$game_name'";
         $db->sql($sql);
         $res = $db->getResult();
         foreach ($res as $row) {
             $temp['date'] = $row['date'];
             $temp[$row['game_name']] = $row['result'];
+            $rows[] = $temp;
         }
+        
         
    
     }
-    $rows[] = $temp;
+    
     $response['success'] = true;
     $response['message'] = "Results listed Successfully";
     $response['data'] = $rows;

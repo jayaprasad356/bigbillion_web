@@ -73,6 +73,29 @@ $points = $_POST['points'];
 $points_arr = json_decode($points, true);
 $number_arr = json_decode($number, true);
 
+if($game_name =='FD'){
+    $game_time = '05:35 PM';
+}
+else if($game_name =='GB'){
+    $game_time = '07:35 PM';
+}
+else if($game_name =='GL'){
+    $game_time = '10:35 PM';
+}
+else if($game_name =='DS'){
+    $game_time = '02:10 AM';
+}
+
+$start_date = $game_date .' '.$game_time;
+$start_date = new DateTime($start_date);
+$now = new DateTime();
+$now  = $now->format('Y-m-d h:i A');
+$end_date = new DateTime($now);
+
+if ($start_date < $end_date) {
+    $game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+}
+
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
 $db->sql($sql);
 $res = $db->getResult();
@@ -105,9 +128,6 @@ if ($num == 1) {
                     $db->sql($sql);
 
                 }
-            
-
-
 
             }
         }
