@@ -73,13 +73,13 @@ foreach ($res as $row) {
 $harufresult = sprintf("%02d", $result);
 $andarresult = substr($harufresult, 0, 1); 
 $baharresult = substr($harufresult, 1, 2); 
-$sql = "SELECT * FROM haruf WHERE game_date = '$date' AND game_name = '$game_name' AND number = '$andarresult' AND game_type = 'andar";
+$sql = "SELECT * FROM haruf WHERE game_date = '$date' AND game_name = '$game_name' AND number = '$andarresult' AND game_type = 'andar'";
 $db->sql($sql);
 $res = $db->getResult();
 foreach ($res as $row) {
     $points = round($row['points'] * 9.5);
     $user_id = $row['user_id'];
-    $sql = "INSERT INTO winners (user_id, points, game_name,date,result) VALUES ('$row[user_id]', '$points', '$game_name', '$date','$result')";
+    $sql = "INSERT INTO winners (user_id, points, game_name,date,result) VALUES ('$user_id', '$points', '$game_name', '$date','$result')";
     $db->sql($sql);
     $sql = "UPDATE users SET points = points + '$points' WHERE id = '$row[user_id]'";
     $db->sql($sql);
@@ -93,7 +93,7 @@ foreach ($res as $row) {
     $db->sql($sql);
 
 }
-$sql = "SELECT * FROM haruf WHERE game_date = '$date' AND game_name = '$game_name' AND number = '$baharresult' AND game_type = 'bahar";
+$sql = "SELECT * FROM haruf WHERE game_date = '$date' AND game_name = '$game_name' AND number = '$baharresult' AND game_type = 'bahar'";
 $db->sql($sql);
 $res = $db->getResult();
 foreach ($res as $row) {
