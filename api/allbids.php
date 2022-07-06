@@ -56,6 +56,11 @@ $sql = "SELECT * FROM `haruf` WHERE game_date = '$date' AND game_name = '$game_n
 $db->sql($sql);
 $haruf = $db->getResult();
 $harufnum = $db->numRows($haruf);
+$sql = "SELECT SUM(points) AS total_points FROM haruf WHERE game_date = '$date' AND game_name = '$game_name'";
+$db->sql($sql);
+$haruftotalpoints = $db->getResult();
+$haruftotalpoints = $haruftotalpoints[0]['total_points'];
+$totalpoints = $totalpoints + $haruftotalpoints;
 if ($num >= 1 || $harufnum >= 1) {
     $response['success'] = true;
     $response['message'] = "Users listed Successfully";
