@@ -55,17 +55,30 @@ $quick_cross = $db->numRows($quick_cross);
 $sql = "SELECT * FROM `haruf` WHERE game_date = '$date' AND game_name = '$game_name'";
 $db->sql($sql);
 $haruf = $db->getResult();
-$haruf = $db->numRows($haruf);
-if ($num >= 1) {
+$harufnum = $db->numRows($haruf);
+if ($num >= 1 || $harufnum >= 1) {
     $response['success'] = true;
     $response['message'] = "Users listed Successfully";
     $response['total_users'] = $num;
     $response['jodi'] = $jodi;
     $response['odd_even'] = $odd_even;
     $response['quick_cross'] = $quick_cross;
-    $response['haruf'] = $haruf;
+    $response['haruf'] = $harufnum;
     $response['total_points'] = $totalpoints;
-    $response['data'] = $res;
+
+    foreach ($res as $row) {
+        $temp['number'] = $row['number'];
+        $temp['points'] = $row['points'];
+        $temp['game_type'] = 'usual';
+        $rows[] = $temp;
+    }
+    foreach ($haruf as $row) {
+        $temp['number'] = $row['number'];
+        $temp['points'] = $row['points'];
+        $temp['game_type'] = 'haruf';
+        $rows[] = $temp;
+    }
+    $response['data'] = $rows;
     print_r(json_encode($response));
 }
 else{

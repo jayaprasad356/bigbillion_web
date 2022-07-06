@@ -37,10 +37,6 @@ if ($num >= 1) {
         $temp['FD'] = $row['FD'];
         $temp['date'] = $row['date'];
         $rows[] = $temp;
-
-        
-        
-   
     }
     
     $response['success'] = true;
