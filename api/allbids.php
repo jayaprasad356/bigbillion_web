@@ -83,7 +83,7 @@ if ($num >= 1 || $harufnum >= 1) {
 }
 else{
     $response['success'] = false;
-    $response['message'] = "No User Found";
+    $response['message'] = "No Bid Found";
     $response['data'] = $res;
     print_r(json_encode($response));
 
