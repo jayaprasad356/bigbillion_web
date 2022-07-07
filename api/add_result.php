@@ -8,9 +8,16 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 date_default_timezone_set('Asia/Kolkata');
 include_once('../includes/crud.php');
+require_once '../includes/functions.php';
+require_once('../includes/firebase.php');
+require_once ('../includes/push.php');
 
 $db = new Database();
 $db->connect();
+$fnc = new functions;
+include_once('../includes/custom-functions.php');
+    
+$fn = new custom_functions;
 
 if (empty($_POST['date'])) {
     $response['success'] = false;
@@ -115,6 +122,41 @@ foreach ($res as $row) {
 }
 $sql = "INSERT INTO results (date, result, day, month, year, game_name) VALUES ('$game_date', '$result', '$day', '$month', '$year', '$game_name')";
 $db->sql($sql);
+
+$url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+$url .= $_SERVER['SERVER_NAME'];
+$url .= $_SERVER['REQUEST_URI'];
+$server_url = dirname($url).'/';
+$id = "0";
+$type = "default";
+
+$push = null;
+
+//first check if the push has an image with it
+$push = new Push(
+    'Result For Game '.$game_name,
+    $result.' is the Winning Number',
+    null,
+    $type,
+    $id
+);
+
+//getting the push from push object
+$mPushNotification = $push->getPush();
+
+//getting the token from database object 
+$devicetoken = $fnc->getAllTokens();
+//$devicetoken1 = $fnc->getAllTokens("devices");
+//$final_tokens = array_merge($devicetoken,$devicetoken1);
+$f_tokens = array_unique($devicetoken);
+$devicetoken_chunks = array_chunk($f_tokens,1000);
+foreach($devicetoken_chunks as $devicetokens){
+    //creating firebase class object 
+    $firebase = new Firebase(); 
+
+    //sending push notification and displaying result 
+    $firebase->send($devicetokens, $mPushNotification);
+}
 $response['success'] = true;
 $response['message'] = "Result Announced Successfully";
 print_r(json_encode($response));

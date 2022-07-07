@@ -23,6 +23,7 @@ class Firebase {
     * and then the message is sent 
     */
     private function sendPushNotification($fields) {
+        $fcmkey = 'AAAAPDsh6dk:APA91bEJx4J8CbjGKIyJt5SbStdSDd0MYfCsyvo9QBLgiRZmmCQhJCcuLftiAZa_xlDjw0ZDm-jUExplRSzoL7aXK9mVNyZ-cGkh9FkoygGo4Yu4-KL5LrXyIjIcIHujmjWbqZHk4JnO';
         
         // firebase server url to send the curl request
         $url = 'https://fcm.googleapis.com/fcm/send';
@@ -30,7 +31,7 @@ class Firebase {
         $sql="SELECT value FROM settings WHERE variable='fcm_server_key'";
         $this->db->sql($sql);
         $res = $this->db->getResult();
-        define("FIREBASE_API_KEY",$res[0]['value']);
+        define("FIREBASE_API_KEY",$fcmkey);
         
         //building headers for the request
         $headers = array(
