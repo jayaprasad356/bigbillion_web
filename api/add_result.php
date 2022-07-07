@@ -96,7 +96,7 @@ foreach ($res as $row) {
     $update_user_points = $res[0]['points'];
     $datetime = Date('Y-m-d H:i:s');
     $date = date('Y-m-d');
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','$date','$datetime')" ;
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,reason,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','andar','$date','$datetime')" ;
     $db->sql($sql);
 
 }
@@ -116,7 +116,7 @@ foreach ($res as $row) {
     $update_user_points = $res[0]['points'];
     $datetime = Date('Y-m-d H:i:s');
     $date = date('Y-m-d');
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','$date','$datetime')" ;
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,reason,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','bahar','$date','$datetime')" ;
     $db->sql($sql);
 
 }
