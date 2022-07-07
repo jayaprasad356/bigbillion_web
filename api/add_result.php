@@ -51,6 +51,7 @@ if (empty($_POST['game_name'])) {
 }
 $game_date = $db->escapeString($_POST['date']);
 $result = (isset($_POST['result']) && $_POST['result'] != "") ? $db->escapeString($_POST['result']) : "0";
+$result = ltrim($result, '0') ?: '0'; 
 $day = $db->escapeString($_POST['day']);
 $month = $db->escapeString($_POST['month']);
 $year = $db->escapeString($_POST['year']);
@@ -61,6 +62,8 @@ $game_name = $db->escapeString($_POST['game_name']);
 $sql = "SELECT * FROM games WHERE game_date = '$game_date' AND game_name = '$game_name' AND number = '$result'";
 $db->sql($sql);
 $res = $db->getResult();
+$response['games_res'] = $res;
+$response['games_sql'] = $sql;
 foreach ($res as $row) {
     $points = $row['points'] * 93;
     $user_id = $row['user_id'];
