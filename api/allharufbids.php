@@ -25,7 +25,7 @@ if (empty($_POST['game_name'])) {
 }
 $date = $db->escapeString($_POST['date']);
 $game_name = $db->escapeString($_POST['game_name']);
-$sql = "SELECT *,SUM(points) AS points FROM `games` WHERE game_date = '$date' AND game_name = '$game_name' GROUP BY number ORDER BY number DESC";;
+$sql = "SELECT *,SUM(points) AS points FROM `haruf` WHERE game_date = '$date' AND game_name = '$game_name' GROUP BY number ORDER BY number DESC";;
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
