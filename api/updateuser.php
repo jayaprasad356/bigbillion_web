@@ -29,7 +29,7 @@ if (empty($_POST['name'])) {
 $mobile = $db->escapeString($_POST['mobile']);
 $name = $db->escapeString($_POST['name']);
 
-$sql= "INSERT INTO users (mobile,name,points) VALUES ('$mobile','$name',0)";
+$sql= "INSERT INTO users (mobile,name,points,loggedin) VALUES ('$mobile','$name',0,1)";
 $db->sql($sql);
 $res = $db->getResult();
 $sql = "SELECT * FROM users WHERE mobile ='$mobile'";

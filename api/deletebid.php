@@ -61,7 +61,7 @@ $sql = "DELETE FROM haruf WHERE user_id = '$user_id' AND game_name = '$game_name
 $db->sql($sql);
 $datetime = Date('Y-m-d H:i:s');
 $date = date('Y-m-d');
-$sql = "INSERT INTO `transactions` (user_id,points,balance,type,date,date_created) VALUES('$user_id','$totalpoints','$newpoints','delete_bids','$date','$datetime')" ;
+$sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$totalpoints','$newpoints','delete_bids','$game_name','$date','$datetime')" ;
 $db->sql($sql);
 $response['success'] = true;
 $response['message'] = "Bids Deleted Successfully";

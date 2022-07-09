@@ -26,10 +26,22 @@ $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1){
-    $response['success'] = true;
-    $response['login'] = true;
-    $response['message'] = "Logged In Successfully";
-    $response['data'] = $res;
+    $sql = 'UPDATE users SET loggedin = 1 WHERE mobile = "'.$mobile.'"';
+    $db->sql($sql);
+
+    $loggedin = $res[0]['loggedin'];
+    if ($loggedin == 0){
+        $response['success'] = true;
+        $response['login'] = true;
+        $response['message'] = "Logged In Successfully";
+        $response['data'] = $res;
+    }
+    else{
+        $response['success'] = false;
+        $response['message'] = "Mobile Number Already in Logged In Please Logout from that device";
+        $response['data'] = $res;
+    }
+
 }
 else{
     $response['success'] = true;
