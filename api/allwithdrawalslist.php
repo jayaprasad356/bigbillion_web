@@ -19,7 +19,7 @@ if (empty($_POST['date'])) {
     return false;
 }
 $date = $db->escapeString($_POST['date']);
-$sql = "SELECT *,withdrawal.id AS id,withdrawal.points AS points,withdrawal.status AS status,withdrawal.id AS id FROM withdrawal,users WHERE withdrawal.user_id = users.id AND withdrawal.date_created like '%" . $date . "%' ORDER BY withdrawal.id DESC";
+$sql = "SELECT *,withdrawal.id AS id,withdrawal.points AS points,withdrawal.status AS status,withdrawal.id AS id,withdrawal.date_created AS date_created FROM withdrawal,users WHERE withdrawal.user_id = users.id AND withdrawal.date_created like '%" . $date . "%' ORDER BY withdrawal.id DESC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
