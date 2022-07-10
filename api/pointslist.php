@@ -18,7 +18,7 @@ if (empty($_POST['date'])) {
     return false;
 }
 $date = $db->escapeString($_POST['date']);
-$sql = "SELECT *,points.id AS id,points.points AS points,points.status AS status FROM points,users WHERE points.user_id = users.id AND points.date_created like '%" . $date . "%' ORDER BY points.id DESC";
+$sql = "SELECT *,points.id AS id,points.points AS points,points.status AS status,points.date_created AS date_created FROM points,users WHERE points.user_id = users.id AND points.date_created like '%" . $date . "%' ORDER BY points.id DESC";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
