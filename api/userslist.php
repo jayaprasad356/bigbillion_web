@@ -15,11 +15,13 @@ $db->connect();
 if (empty($_POST['search'])) {
     
     $sql = "SELECT * FROM users ORDER BY id DESC";
+    $sql2 = "SELECT SUM(points) AS total_points FROM users ORDER BY id DESC";
     
 }
 else{
     $search = $db->escapeString($_POST['search']);
     $sql = "SELECT * FROM users WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
+    $sql2 = "SELECT SUM(points) AS total_points FROM users WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
 
 
 }
@@ -27,11 +29,14 @@ else{
 
 $db->sql($sql);
 $res = $db->getResult();
+$db->sql($sql2);
+$res2 = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
     $response['success'] = true;
     $response['message'] = "Users listed Successfully";
     $response['total_users'] = $num;
+    $response['total_points'] = $res2[0]['total_points'];
     $response['data'] = $res;
     print_r(json_encode($response));
 }
