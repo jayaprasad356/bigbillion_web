@@ -25,26 +25,43 @@ if (empty($_POST['game_name'])) {
 }
 $date = $db->escapeString($_POST['date']);
 $game_name = $db->escapeString($_POST['game_name']);
+$sql = "SELECT *,users.id AS id FROM users,haruf WHERE users.id = haruf.user_id AND haruf.game_date = '$date' AND haruf.game_name = '$game_name' GROUP BY haruf.user_id ORDER BY users.id DESC";
+$db->sql($sql);
+$res1 = $db->getResult();
 $sql = "SELECT *,users.id AS id FROM users,games WHERE users.id = games.user_id AND games.game_date = '$date' AND games.game_name = '$game_name' GROUP BY games.user_id ORDER BY users.id DESC";
 $db->sql($sql);
-$res = $db->getResult();
+$res2 = $db->getResult();
+$num1 = $db->numRows($res1);
+$num2 = $db->numRows($res2);
+
+$sql = "SELECT SUM(points) AS total_points FROM haruf WHERE game_date = '$date' AND game_name = '$game_name'";
+$db->sql($sql);
+$totalpoints1 = $db->getResult();
+
 $sql = "SELECT SUM(points) AS total_points FROM games WHERE game_date = '$date' AND game_name = '$game_name'";
 $db->sql($sql);
-$totalpoints = $db->getResult();
-$num = $db->numRows($res);
-$totalpoints = $totalpoints[0]['total_points'];
+$totalpoints2 = $db->getResult();
+
+$totalpoints1 = $totalpoints1[0]['total_points'];
+$totalpoints2 = $totalpoints2[0]['total_points'];
+$row = array();
+$row = array_merge($res1, $res2);
+$num = count($row);
 if ($num >= 1) {
+    $num = count($row);
+    $totalpoints = $totalpoints1 + $totalpoints2;
+
     $response['success'] = true;
     $response['message'] = "Users listed Successfully";
     $response['total_users'] = $num;
     $response['total_points'] = $totalpoints;
-    $response['data'] = $res;
+    $response['data'] = $row;
     print_r(json_encode($response));
 }
 else{
     $response['success'] = false;
     $response['message'] = "No User Found";
-    $response['data'] = $res;
+    $response['data'] = $row;
     print_r(json_encode($response));
 
 }
