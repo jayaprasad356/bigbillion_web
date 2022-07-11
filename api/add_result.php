@@ -87,7 +87,7 @@ $sql = "SELECT * FROM haruf WHERE game_date = '$game_date' AND game_name = '$gam
 $db->sql($sql);
 $res = $db->getResult();
 foreach ($res as $row) {
-    $points = round($row['points'] * 9.5);
+    $points = round($row['points'] * 9.2);
     $user_id = $row['user_id'];
     $sql = "INSERT INTO winners (user_id, points, game_name,date,result) VALUES ('$user_id', '$points', '$game_name', '$game_date','$result')";
     $db->sql($sql);
@@ -107,7 +107,7 @@ $sql = "SELECT * FROM haruf WHERE game_date = '$game_date' AND game_name = '$gam
 $db->sql($sql);
 $res = $db->getResult();
 foreach ($res as $row) {
-    $points = round($row['points'] * 9.5);
+    $points = round($row['points'] * 9.2);
     $user_id = $row['user_id'];
     $sql = "INSERT INTO winners (user_id, points, game_name,date,result) VALUES ('$row[user_id]', '$points', '$game_name', '$game_date','$result')";
     $db->sql($sql);
