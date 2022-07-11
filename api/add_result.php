@@ -67,6 +67,7 @@ $response['games_sql'] = $sql;
 foreach ($res as $row) {
     $points = $row['points'] * 93;
     $user_id = $row['user_id'];
+    $game_type = $row['game_type'];
     $sql = "INSERT INTO winners (user_id, points, game_name,date,result) VALUES ('$row[user_id]', '$points', '$game_name', '$game_date','$result')";
     $db->sql($sql);
     $sql = "UPDATE users SET points = points + '$points' WHERE id = '$row[user_id]'";
@@ -77,7 +78,7 @@ foreach ($res as $row) {
     $update_user_points = $res[0]['points'];
     $datetime = Date('Y-m-d H:i:s');
     $date = date('Y-m-d');
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','$date','$datetime')" ;
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,game_type,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','$game_type','$date','$datetime')" ;
     $db->sql($sql);
 }
 $harufresult = sprintf("%02d", $result);
@@ -99,7 +100,7 @@ foreach ($res as $row) {
     $update_user_points = $res[0]['points'];
     $datetime = Date('Y-m-d H:i:s');
     $date = date('Y-m-d');
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,reason,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','andar','$date','$datetime')" ;
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,game_type,reason,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','andar','andar','$date','$datetime')" ;
     $db->sql($sql);
 
 }
@@ -119,7 +120,7 @@ foreach ($res as $row) {
     $update_user_points = $res[0]['points'];
     $datetime = Date('Y-m-d H:i:s');
     $date = date('Y-m-d');
-    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,reason,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','bahar','$date','$datetime')" ;
+    $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,game_type,reason,date,date_created) VALUES('$user_id','$points','$update_user_points','correctresult','$game_name','bahar','bahar','$date','$datetime')" ;
     $db->sql($sql);
 
 }

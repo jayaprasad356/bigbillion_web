@@ -31,6 +31,7 @@ if ($num == 1) {
     $res = $db->getResult();
     foreach ($res as $row) {
         $user_id = $row['user_id'];
+        $game_type = $row['game_type'];
         $sql = "SELECT * FROM winners WHERE user_id = '$user_id' AND game_name = '$game_name' AND date = '$date' AND result = '$result'";
         $db->sql($sql);
         $reswin = $db->getResult();
@@ -45,7 +46,7 @@ if ($num == 1) {
         $update_user_points = $res[0]['points'];
         $datetime = Date('Y-m-d H:i:s');
         $date = date('Y-m-d');
-        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$game_name','$date','$datetime')" ;
+        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,game_type,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$game_name','$game_type','$date','$datetime')" ;
         $db->sql($sql);
     }
     $harufresult = sprintf("%02d", $result);
@@ -70,7 +71,7 @@ if ($num == 1) {
         $update_user_points = $res[0]['points'];
         $datetime = Date('Y-m-d H:i:s');
         $date = date('Y-m-d');
-        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$game_name','$date','$datetime')" ;
+        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,game_type,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$game_name','andar','$date','$datetime')" ;
         $db->sql($sql);
     }
     $sql = "SELECT * FROM haruf WHERE game_date = '$date' AND game_name = '$game_name' AND number = '$baharresult' AND game_type = 'bahar'";
@@ -92,7 +93,7 @@ if ($num == 1) {
         $update_user_points = $res[0]['points'];
         $datetime = Date('Y-m-d H:i:s');
         $date = date('Y-m-d');
-        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$game_name','$date','$datetime')" ;
+        $sql = "INSERT INTO `transactions` (user_id,points,balance,type,game_name,game_type,date,date_created) VALUES('$user_id','$winpoints','$update_user_points','wrongresult','$game_name','bahar','$date','$datetime')" ;
         $db->sql($sql);
     }
     $sql = "DELETE FROM results WHERE id = '$id'";
