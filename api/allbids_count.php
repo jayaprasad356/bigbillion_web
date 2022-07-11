@@ -52,10 +52,15 @@ $sql = "SELECT * FROM `games` WHERE game_type = 'quick_cross' AND game_date = '$
 $db->sql($sql);
 $quick_cross = $db->getResult();
 $quick_cross = $db->numRows($quick_cross);
-$sql = "SELECT * FROM `haruf` WHERE game_date = '$date' AND game_name = '$game_name' GROUP BY user_id ORDER BY number DESC";
+$sql = "SELECT * FROM `haruf` WHERE game_type='andar' AND game_date = '$date' AND game_name = '$game_name' GROUP BY user_id ORDER BY number DESC";
 $db->sql($sql);
-$haruf = $db->getResult();
-$harufnum = $db->numRows($haruf);
+$haruf1 = $db->getResult();
+$harufnum1 = $db->numRows($haruf1);
+$sql = "SELECT * FROM `haruf` WHERE game_type='bahar' AND  game_date = '$date' AND game_name = '$game_name' GROUP BY user_id ORDER BY number DESC";
+$db->sql($sql);
+$haruf2 = $db->getResult();
+$harufnum2 = $db->numRows($haruf2);
+$harufnum = $harufnum1 + $harufnum2;
 $sql = "SELECT SUM(points) AS total_points FROM haruf WHERE game_date = '$date' AND game_name = '$game_name'";
 $db->sql($sql);
 $haruftotalpoints = $db->getResult();
