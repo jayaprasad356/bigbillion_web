@@ -46,6 +46,10 @@ $totalpoints1 = $totalpoints1[0]['total_points'];
 $totalpoints2 = $totalpoints2[0]['total_points'];
 $row = array();
 $row = array_merge($res1, $res2);
+
+$sql = "SELECT *,users.id AS id FROM users,haruf,games WHERE users.id = haruf.user_id AND haruf.game_date = '$date' AND haruf.game_name = '$game_name' AND users.id = games.user_id AND games.game_date = '$date' AND games.game_name = '$game_name'  GROUP BY haruf.user_id,games.user_id ORDER BY users.id DESC";
+$db->sql($sql);
+$row = $db->getResult();
 $num = count($row);
 if ($num >= 1) {
     $num = count($row);
