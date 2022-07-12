@@ -52,6 +52,9 @@ $sql = "SELECT * FROM `games` WHERE game_type = 'quick_cross' AND game_date = '$
 $db->sql($sql);
 $quick_cross = $db->getResult();
 $quick_cross = $db->numRows($quick_cross);
+$sql = "SELECT * FROM `haruf` WHERE game_date = '$date' AND game_name = '$game_name' GROUP BY user_id ORDER BY number DESC";
+$db->sql($sql);
+$haruf = $db->getResult();
 $sql = "SELECT * FROM `haruf` WHERE game_type='andar' AND game_date = '$date' AND game_name = '$game_name' GROUP BY user_id ORDER BY number DESC";
 $db->sql($sql);
 $haruf1 = $db->getResult();
@@ -66,11 +69,19 @@ $db->sql($sql);
 $haruftotalpoints = $db->getResult();
 $haruftotalpoints = $haruftotalpoints[0]['total_points'];
 $totalpoints = $totalpoints + $haruftotalpoints;
+$row = array();
+$row = array_merge($haruf, $res);
+$usersCount = count(array_unique(array_column($row, 'user_id'))); 
+
 if ($num >= 1 || $harufnum >= 1) {
-    $num  = $num + $harufnum;
+    //$num  = $num + $harufnum;
+    $sql = "SELECT * FROM `games`,`haruf` WHERE games.game_date = '$date' AND games.game_name = '$game_name' AND haruf.game_date = '$date' AND haruf.game_name = '$game_name' GROUP BY games.user_id,haruf.user_id";
+    $db->sql($sql);
+    $resuser = $db->getResult();
+    $num = $db->numRows($resuser);
     $response['success'] = true;
     $response['message'] = "Users listed Successfully";
-    $response['total_users'] = $num;
+    $response['total_users'] = $usersCount;
     $response['jodi'] = $jodi;
     $response['odd_even'] = $odd_even;
     $response['quick_cross'] = $quick_cross;
