@@ -68,7 +68,7 @@ foreach ($res as $row) {
     $points = $row['points'] * 93;
     $user_id = $row['user_id'];
     $game_type = $row['game_type'];
-    $sql = "INSERT INTO winners (user_id, points, game_name,date,result) VALUES ('$row[user_id]', '$points', '$game_name', '$game_date','$result')";
+    $sql = "INSERT INTO winners (user_id, points, game_name,game_type,date,result) VALUES ('$row[user_id]', '$points', '$game_name', 'games','$game_date','$result')";
     $db->sql($sql);
     $sql = "UPDATE users SET points = points + '$points' WHERE id = '$row[user_id]'";
     $db->sql($sql);

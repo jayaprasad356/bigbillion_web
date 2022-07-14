@@ -32,11 +32,11 @@ if ($num == 1) {
     foreach ($res as $row) {
         $user_id = $row['user_id'];
         $game_type = $row['game_type'];
-        $sql = "SELECT * FROM winners WHERE user_id = '$user_id' AND game_name = '$game_name' AND date = '$date' AND result = '$result'";
+        $sql = "SELECT * FROM winners WHERE user_id = '$user_id' AND game_name = '$game_name' AND date = '$date' AND result = '$result' AND game_type = 'games'";
         $db->sql($sql);
         $reswin = $db->getResult();
         $winpoints = $reswin[0]['points'];
-        $sql = "DELETE FROM winners WHERE user_id = '$user_id' AND game_name = '$game_name' AND date = '$date' AND result = '$result'";
+        $sql = "DELETE FROM winners WHERE user_id = '$user_id' AND game_name = '$game_name' AND date = '$date' AND result = '$result'  AND game_type = 'games'";
         $db->sql($sql);
         $sql = "UPDATE users SET points = points - '$winpoints' WHERE id = '$row[user_id]'";
         $db->sql($sql);
