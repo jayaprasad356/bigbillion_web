@@ -19,28 +19,27 @@ if (empty($_POST['mobile'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['device_id'])) {
+    $response['success'] = false;
+    $response['message'] = "Device Id is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 $mobile= $db->escapeString($_POST['mobile']);
+$device_id = $db->escapeString($_POST['device_id']);
 $sql = "SELECT * FROM users WHERE mobile ='$mobile'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1){
-    $sql = 'UPDATE users SET loggedin = 1 WHERE mobile = "'.$mobile.'"';
+    $sql = "UPDATE users SET loggedin = 1, device_id = '$device_id' WHERE mobile = '$mobile'";
     $db->sql($sql);
 
-    $loggedin = $res[0]['loggedin'];
-    if ($loggedin == 0){
-        $response['success'] = true;
-        $response['login'] = true;
-        $response['message'] = "Logged In Successfully";
-        $response['data'] = $res;
-    }
-    else{
-        $response['success'] = false;
-        $response['message'] = "Mobile Number Already in Logged In Please Logout from that device";
-        $response['data'] = $res;
-    }
+    $response['success'] = true;
+    $response['login'] = true;
+    $response['message'] = "Logged In Successfully";
+    $response['data'] = $res;
 
 }
 else{

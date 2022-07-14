@@ -27,7 +27,7 @@ $res = $db->getResult();
 $num = $db->numRows($res);
     
 $response['success'] = true;
-$response['message'] = "Transactions listed Successfully".$todaydate;
+$response['message'] = "Transactions listed Successfully";
 $response['data'] = $res;
 print_r(json_encode($response));
 ?>

@@ -25,11 +25,17 @@ if (empty($_POST['name'])) {
     print_r(json_encode($response));
     return false;
 }
+if (empty($_POST['device_id'])) {
+    $response['success'] = false;
+    $response['message'] = "Device Id is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 $mobile = $db->escapeString($_POST['mobile']);
 $name = $db->escapeString($_POST['name']);
-
-$sql= "INSERT INTO users (mobile,name,points,loggedin) VALUES ('$mobile','$name',0,1)";
+$device_id = $db->escapeString($_POST['device_id']);
+$sql= "INSERT INTO users (mobile,name,points,loggedin,device_id) VALUES ('$mobile','$name',0,1,'$device_id')";
 $db->sql($sql);
 $res = $db->getResult();
 $sql = "SELECT * FROM users WHERE mobile ='$mobile'";
