@@ -32,21 +32,25 @@ $sql = "SELECT * FROM users WHERE mobile ='$mobile'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
-if($res[0]['user_status'] == 0){
-    $response['success'] = false;
-    $response['message'] = "Your account is not activated";
-    $response['data'] = NULL;
-    print_r(json_encode($response));
-    return false;
-}
-if ($num == 1){
-    $sql = "UPDATE users SET loggedin = 1, device_id = '$device_id' WHERE mobile = '$mobile'";
-    $db->sql($sql);
 
-    $response['success'] = true;
-    $response['login'] = true;
-    $response['message'] = "Logged In Successfully";
-    $response['data'] = $res;
+if ($num == 1){
+    if($res[0]['user_status'] == 0){
+        $response['success'] = false;
+        $response['message'] = "Your account is not activated";
+        $response['data'] = NULL;
+        print_r(json_encode($response));
+        return false;
+    }else{
+        $sql = "UPDATE users SET loggedin = 1, device_id = '$device_id' WHERE mobile = '$mobile'";
+        $db->sql($sql);
+    
+        $response['success'] = true;
+        $response['login'] = true;
+        $response['message'] = "Logged In Successfully";
+        $response['data'] = $res;
+
+    }
+
 
 }
 else{
