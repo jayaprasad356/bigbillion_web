@@ -5,7 +5,7 @@
  * @Package Database
  */
 
-define('DOMAIN_URL', 'http://app.bigbillionenterprises.co.in/'); /* chnage to your domain here - don't forget to add forward slash at the end of the URL like this "/" */
+define('DOMAIN_URL', 'http://bigbillion.greymatterworks.in/'); /* chnage to your domain here - don't forget to add forward slash at the end of the URL like this "/" */
 define('ALLOW_MODIFICATION', 1);
 define('JWT_SECRET_KEY', '12345678'); /* chnage to your secret key here set it to anything you like*/
 date_default_timezone_set("Asia/Calcutta");
@@ -18,10 +18,20 @@ class Database
      * Database class
      */
 
-    private $db_host = "localhost";  // Change as required
-    private $db_user = "u424887645_bigbillion";  // Change as required
-    private $db_pass = "Bigbillion@2022";  // Change as required
-    private $db_name = "u424887645_bigbillion";    // Change as required
+    //  define('DOMAIN_URL', 'http://app.bigbillionenterprises.co.in/'); 
+    //live server db
+    // private $db_host = "localhost"; 
+    // private $db_user = "u424887645_bigbillion"; 
+    // private $db_pass = "Bigbillion@2022";
+    // private $db_name = "u424887645_bigbillion";   
+
+
+    //test server db
+    private $db_host = "localhost"; 
+    private $db_user = "u743445510_bigbillion";  
+    private $db_pass = "Bigbillion@2023";  
+    private $db_name = "u743445510_bigbillion";    
+
 
     /*
      * Extra variables that are required by other function such as boolean con variable
