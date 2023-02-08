@@ -40,7 +40,15 @@ if ($num == 1){
         $response['data'] = NULL;
         print_r(json_encode($response));
         return false;
-    }else{
+    }
+    elseif($res[0]['user_status'] == 2){
+        $response['success'] = false;
+        $response['message'] = "Your account is Blocked Contact Admin";
+        $response['data'] = NULL;
+        print_r(json_encode($response));
+        return false;
+    }
+    else{
         $sql = "UPDATE users SET loggedin = 1, device_id = '$device_id' WHERE mobile = '$mobile'";
         $db->sql($sql);
     
