@@ -54,12 +54,6 @@ if (empty($_POST['total_points'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['game_date'])) {
-    $response['success'] = false;
-    $response['message'] = "Game Date is Empty";
-    print_r(json_encode($response));
-    return false;
-}
 
 
 $user_id = $db->escapeString($_POST['user_id']);
@@ -67,7 +61,7 @@ $game_name = $db->escapeString($_POST['game_name']);
 $game_type = $db->escapeString($_POST['game_type']);
 $game_method = $db->escapeString($_POST['game_method']);
 $total_points = $db->escapeString($_POST['total_points']);
-$game_date = $db->escapeString($_POST['game_date']);
+$game_date = date('Y-m-d');
 $number = $_POST['number'];
 $points = $_POST['points'];
 $points_arr = json_decode($points, true);
