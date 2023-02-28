@@ -69,16 +69,16 @@ $number_arr = json_decode($number, true);
 $game_date = date('Y-m-d');
 
 if($game_name =='FD'){
-    $game_time = '05:35 PM';
+    $game_time = '05:45 PM';
 }
 else if($game_name =='GB'){
-    $game_time = '07:35 PM';
+    $game_time = '07:45 PM';
 }
 else if($game_name =='GL'){
-    $game_time = '10:35 PM';
+    $game_time = '10:45 PM';
 }
 else if($game_name =='DS'){
-    $game_time = '02:10 AM';
+    $game_time = '02:20 AM';
 }
 
 $start_date = $game_date .' '.$game_time;
@@ -88,7 +88,11 @@ $now  = $now->format('Y-m-d h:i A');
 $end_date = new DateTime($now);
 
 if ($start_date < $end_date) {
-    $game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+    //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+    $response['success'] = false;
+    $response['message'] = "Please Bet Next Day";
+    print_r(json_encode($response));
+    return false;
 }
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
