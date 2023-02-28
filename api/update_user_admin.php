@@ -31,18 +31,10 @@ $name = $db->escapeString($_POST['name']);
 $sql = "UPDATE users SET name = '$name' WHERE id = $user_id";
 $db->sql($sql);
 $res = $db->getResult();
-if (!empty($res)) {
-    $response['success'] = true;
-    $response['message'] = "User Updated Successfully";
-    print_r(json_encode($response));
-    return false;
-} else {
-    $response['success'] = false;
-    $response['message'] = "Failed to Update User";
-    print_r(json_encode($response));
-    return false;
-}
-
+$response['success'] = true;
+$response['message'] = "User Updated Successfully";
+print_r(json_encode($response));
+return false;
 
 print_r(json_encode($response));
 

@@ -87,7 +87,11 @@ $now  = $now->format('Y-m-d h:i A');
 $end_date = new DateTime($now);
 
 if ($start_date < $end_date) {
-    $game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+    //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+    $response['success'] = false;
+    $response['message'] = "Please Bet Next Day";
+    print_r(json_encode($response));
+    return false;
 }
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
