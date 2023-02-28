@@ -68,16 +68,16 @@ $points_arr = json_decode($points, true);
 $number_arr = json_decode($number, true);
 
 if($game_name =='FD'){
-    $game_time = '05:35 PM';
+    $game_time = '05:45 PM';
 }
 else if($game_name =='GB'){
-    $game_time = '07:35 PM';
+    $game_time = '07:45 PM';
 }
 else if($game_name =='GL'){
-    $game_time = '10:35 PM';
+    $game_time = '10:45 PM';
 }
 else if($game_name =='DS'){
-    $game_time = '02:10 AM';
+    $game_time = '02:20 AM';
 }
 
 $start_date = $game_date .' '.$game_time;
