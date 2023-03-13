@@ -18,7 +18,7 @@ $newsinfo = (isset($_POST['newsinfo']) && $_POST['newsinfo'] != "") ? $db->escap
 $min_withdrawal = (isset($_POST['min_withdrawal']) && $_POST['min_withdrawal'] != "") ? $db->escapeString($_POST['min_withdrawal']) : "";
 $max_withdrawal = (isset($_POST['max_withdrawal']) && $_POST['max_withdrawal'] != "") ? $db->escapeString($_POST['max_withdrawal']) : "";
 $min_deposit = (isset($_POST['min_deposit']) && $_POST['min_deposit'] != "") ? $db->escapeString($_POST['min_deposit']) : "";
-$sql = "UPDATE settings SET whatspp_number = '$whatspp_number', youtube_link = '$youtube_link', upi = '$upi', newsinfo = '$newsinfo', newsinfo = '$newsinfo', newsinfo = '$newsinfo', min_withdrawal = $min_withdrawal, max_withdrawal = $max_withdrawal, min_deposit = $min_deposit WHERE id = 1";
+$sql = "UPDATE settings SET whatspp_number = '$whatspp_number', youtube_link = '$youtube_link', upi = '$upi', newsinfo = '$newsinfo', min_withdrawal = $min_withdrawal, max_withdrawal = $max_withdrawal, min_deposit = $min_deposit WHERE id = 1";
 $db->sql($sql);
 $sql = "SELECT * FROM settings";
 $db->sql($sql);

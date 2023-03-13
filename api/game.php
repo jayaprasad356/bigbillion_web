@@ -89,7 +89,7 @@ $end_date = new DateTime($now);
 if ($start_date < $end_date) {
     //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
     $response['success'] = false;
-    $response['message'] = "Please Bet Next Day";
+    $response['message'] = "GAME OVER";
     print_r(json_encode($response));
     return false;
 }
