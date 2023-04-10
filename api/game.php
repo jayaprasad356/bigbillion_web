@@ -87,7 +87,7 @@ $now  = $now->format('Y-m-d h:i A');
 $end_date = new DateTime($now);
 $game_start_time = $game_date .' 06:00 AM';
 $game_start_time = new DateTime($game_start_time);
-if ($game_start_time > $end_date) {
+if ($game_name != 'DS' && $game_start_time > $end_date) {
     //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
     $response['success'] = false;
     $response['message'] = "GAME NOT START YET";
