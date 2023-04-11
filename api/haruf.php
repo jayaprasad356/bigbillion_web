@@ -88,20 +88,36 @@ $now  = $now->format('Y-m-d h:i A');
 $end_date = new DateTime($now);
 $game_start_time = $game_date .' 06:00 AM';
 $game_start_time = new DateTime($game_start_time);
-if ($game_name != 'DS' && $game_start_time > $end_date) {
+if ($game_start_time > $end_date) {
     //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
     $response['success'] = false;
     $response['message'] = "GAME NOT START YET";
     print_r(json_encode($response));
     return false;
 }
-if ($start_date < $end_date) {
-    //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
-    $response['success'] = false;
-    $response['message'] = "GAME OVER";
-    print_r(json_encode($response));
-    return false;
+if($game_name =='DS'){
+    $game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+    $start_date = $game_date .' '.$game_time;
+    $start_date = new DateTime($start_date);
+    if ($start_date < $end_date) {
+        //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+        $response['success'] = false;
+        $response['message'] = "GAME OVER";
+        print_r(json_encode($response));
+        return false;
+    }
+
 }
+else{
+    if ($start_date < $end_date) {
+        //$game_date = date('Y-m-d', strtotime($game_date . ' +1 day'));
+        $response['success'] = false;
+        $response['message'] = "GAME OVER";
+        print_r(json_encode($response));
+        return false;
+    }
+}
+
 
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
 $db->sql($sql);
