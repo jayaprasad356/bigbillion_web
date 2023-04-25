@@ -47,7 +47,7 @@ else if($game_name =='GL'){
     $game_time = '10:45 PM';
 }
 else if($game_name =='DS'){
-    $game_time = '02:20 AM';
+    $game_time = '02:10 AM';
 }
 
 $start_date = $date .' '.$game_time;
